@@ -9,6 +9,12 @@ Used for Node.js development using Express, MongoDB and Kue (for workers). Handl
 installing all of the above as well as a projects package.json.
 
 
+#### golang/
+
+Simple Go installation with go tools etc. GOPATH is set to working directory (/vagrant)
+so installed packages can easily be explored and developed.
+
+
 #### python/
 
 TODO: Install Flask, Gunicorn, MongoDB and Supervisord. Handle pip dependencies.
