@@ -1,0 +1,25 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+# Set this to whatever go package you want to install
+GO_PKG = "go1.4.1.linux-amd64.tar.gz"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = "ubuntu/trusty64"
+  config.vm.network :forwarded_port, host: 8080, guest: 8080
+
+  install_cmd =  "sudo apt-get update; "
+  install_cmd << "sudo apt-get install -y git; "
+  install_cmd  = "wget https://storage.googleapis.com/golang/#{GO_PKG}; "
+  install_cmd << "sudo tar -xzf #{GO_PKG}; "
+  install_cmd << "mkdir -p /vagrant/{bin,pkg,src}; "
+  config.vm.provision :shell, :inline => install_cmd
+
+  path_cmd =  "echo 'export GOROOT=$HOME/go' >> $HOME/.bash_profile; "
+  path_cmd << "echo 'export GOPATH=/vagrant' >> $HOME/.bash_profile; "
+  path_cmd << "echo 'export PATH=$PATH:$GOROOT/bin:$GOPATH/bin' >> $HOME/.bash_profile; "
+  config.vm.provision :shell, :inline => path_cmd, run: "always", privileged: false
+end
