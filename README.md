@@ -14,7 +14,7 @@ Example:
 vagrant up
 vagrant ssh # log into vagrant box
 go get github.com/golang/example/hello
-./hello
+hello # package binaries can be called globally
 ```
 
 
