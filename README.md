@@ -35,7 +35,17 @@ node server.js # visit http://localhost:3000 in browser
 
 #### python/
 
-TODO: Install Flask, Gunicorn, MongoDB and Supervisord. Handle pip dependencies.
+Used for Python development using Flask, MongoDB and Redis. Handles installing
+all of the above as well as requirements.txt.
+
+Example:
+
+```
+vagrant up
+vagrant ssh
+cd /vagrant
+python app.py # visit http://localhost:5000
+```
 
 
 #### php/
