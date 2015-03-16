@@ -1,9 +1,9 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# ============================================================
-# For Node.js development with Express, Kue, MongoDB and Redis
-# ============================================================
+# ====================================================
+# For Python development with Flask, MongoDB and Redis
+# ====================================================
 
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
@@ -14,16 +14,20 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     v.cpus = 2
   end
 
-  config.vm.network :forwarded_port, host: 3000, guest: 3000 # Express port
-  config.vm.network :forwarded_port, host: 3100, guest: 3100 # Kue port
+  # Flask port
+  config.vm.network :forwarded_port, host: 5000, guest: 5000
 
   install_cmd =  "sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10; "
   install_cmd << "echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list; "
-  install_cmd << "curl -sL https://deb.nodesource.com/setup | sudo bash -"
   install_cmd << "sudo apt-get update; "
   install_cmd << "sudo apt-get upgrade -y; "
-  install_cmd << "sudo apt-get install -y build-essential nodejs redis-server imagemagick mongodb-org; "
-  install_cdm << "cd /vagrant && npm install"
+  install_cmd << "sudo apt-get install -y build-essential python-dev python-pip redis-server imagemagick mongodb-org; "
+  install_cmd << "sudo pip install -IU pip; "
+  install_cmd << "sudo pip install virtualenv ipython; "
+  install_cmd << "cd /vagrant; "
+  install_cmd << "virtualenv env; "
+  install_cmd << ". env/bin/activate; "
+  install_cmd << "pip install -Ur requirements.txt; "
 
   # Uncomment if you use Heroku / Foreman
   #install_cmd << "wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh"
